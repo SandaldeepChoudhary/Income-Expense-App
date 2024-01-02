@@ -4,34 +4,37 @@ const accountRoute = require("./routes/accounts/accountRoute");
 const transactionsRoute = require("./routes/transactions/transactionsRoute");
 const usersRoute = require("./routes/users/usersRoute");
 const globalErrHandler = require("./middlewares/globalErrHandler");
-const cors = require ("cors");
-const path = require ("path");
-
+const cors = require("cors");
+const path = require("path");
 
 const app = express();
 
-//middlewares
-app.use(express.json())// pass incoming data
-//cors middleware
+// Middlewares
+app.use(express.json()); // pass incoming data
+// Cors middleware
 app.use(cors());
-//static files
-// app.use(express.static(path.join(__dirname, "./client/build")));
-// app.get("*", (req, res)=>{
-//     res.sendFile(path.join(__dirname, "./client/build/index.html"))
-// });
-//users route
+
+// Users route
 app.use("/api/v1/users", usersRoute);
-//account routes
+// Account routes
 app.use("/api/v1/accounts", accountRoute);
 
-//transactions route
+// Transactions route
 app.use("/api/v1/transactions", transactionsRoute);
 
-//Error handlers
+// Error handlers
 app.use(globalErrHandler);
-//listen to server
+
+// Static files
+app.use(express.static(path.join(__dirname, "./client/build")));
+
+// Catch-all route for other routes
+app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "./client/build/index.html"));
+});
+
+// Listen to the server
 const PORT = process.env.PORT || 8080;
-app.listen(PORT, console.log(`Server is up and runing on port ${PORT}`));
-
-
-
+app.listen(PORT, () => {
+    console.log(`Server is up and running on port ${PORT}`);
+});
