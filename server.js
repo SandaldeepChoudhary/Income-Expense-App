@@ -15,10 +15,10 @@ app.use(express.json())// pass incoming data
 //cors middleware
 app.use(cors());
 //static files
-app.use(express.static(path.join(__dirname, "./client/build")));
-app.get("*", (req, res)=>{
-    res.sendFile(path.join(__dirname, "./client/build/index.html"))
-});
+// app.use(express.static(path.join(__dirname, "./client/build")));
+// app.get("*", (req, res)=>{
+//     res.sendFile(path.join(__dirname, "./client/build/index.html"))
+// });
 //users route
 app.use("/api/v1/users", usersRoute);
 //account routes
